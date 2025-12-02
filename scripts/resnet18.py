@@ -19,11 +19,11 @@ from mlflow.types.schema import TensorSpec, Schema
 from mlflow.models import ModelSignature
 
 
-from drp.models.resnet18 import Resnet18Model
-from drp.dataset.dataset import Drp3dSqlite, MinMaxNormalize, MeanNormalize
+from rockai.models.resnet18 import Resnet18Model
+from rockai.dataset.dataset import Drp3dSqliteDataset, MinMaxNormalize, MeanNormalize
 
 
-class Resnet18Training(Training):
+class Drp3dTraining(Training):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config)
@@ -50,14 +50,14 @@ if __name__ == "__main__":
     x_transform = MeanNormalize(config.dataset.mean, config.dataset.std)
     y_transform = MinMaxNormalize(0.2, 23)
 
-    training = Resnet18Training(config)
-    train_dataset = Drp3dSqlite(
+    training = Drp3dTraining(config)
+    train_dataset = Drp3dSqliteDataset(
         config,
         train_flag="train",
         x_transform=x_transform,
         y_transform=y_transform)
 
-    valid_dataset = Drp3dSqlite(
+    valid_dataset = Drp3dSqliteDataset(
         config,
         train_flag="valid",
         x_transform=x_transform,

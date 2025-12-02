@@ -2,8 +2,8 @@ import unittest
 import torch
 from pathlib import Path
 from iapytoo.utils.config import Config, ConfigFactory
-from drp.dataset.dataset import Drp3dSqliteDataset, MinMaxNormalize, MeanNormalize
-from drp.dataset.config import Drp3dDatasetConfig
+from rockai.dataset.dataset import Drp3dSqliteDataset, MinMaxNormalize, MeanNormalize
+from rockai.dataset.config import Drp3dDatasetConfig
 
 
 class TestDataset(unittest.TestCase):

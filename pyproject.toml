@@ -5,14 +5,14 @@ requires = ["setuptools>=61.0"]
 
 [project]
 
-name = "iapy_drp"
+name = "rockai"
 version = "0.0.1"
 
 authors = [
   {name = "Jean-François Lecomte", email = "jean-francois.lecomte@ifpen.fr"},
 ]
 
-description = "module to test pour drp sur iapytoo"
+description = "module drp utilisant iapytoo"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

@@ -7,9 +7,9 @@ from torchvision.transforms import Normalize, Compose, ToTensor
 
 from iapytoo.utils.config import Config
 
-from drp.dataset.memmap import DataModality, load_cube
-from drp.dataset.sqlite_dataset import SqliteDataset
-from drp.dataset.config import Drp3dDatasetConfig
+from rockai.dataset.memmap import DataModality, load_cube
+from rockai.dataset.sqlite_dataset import SqliteDataset
+from rockai.dataset.config import Drp3dDatasetConfig
 
 
 class MeanNormalize:

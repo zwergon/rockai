@@ -3,8 +3,8 @@ import numpy as np
 from pathlib import Path
 from iapytoo.utils.config import Config, ConfigFactory
 
-from drp.dataset.config import Drp3dDatasetConfig
-from drp.dataset.sqlite_dataset import SqliteDataset
+from rockai.dataset.config import Drp3dDatasetConfig
+from rockai.dataset.sqlite_dataset import SqliteDataset
 
 
 class TestSqliteDataset(unittest.TestCase):

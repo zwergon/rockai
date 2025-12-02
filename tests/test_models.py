@@ -1,6 +1,6 @@
 import unittest
 import torch
-from drp.models.backbone import ResNet, generate_model
+from rockai.models.backbone import ResNet, generate_model
 
 
 class TestModels(unittest.TestCase):
