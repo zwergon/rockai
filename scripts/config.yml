@@ -4,9 +4,9 @@ run: basemethod
 dataset:
   type: "drp3d_sqlite"
   path: "/work/lecomtje/Repositories/mixsim3d_gretsi/data/dataset"
-  db: "/work/lecomtje/Repositories/iapy/iapy_drp/tests/dataset_random.db"
-  dim: 32
-  batch_size: 16
+  db: "/work/lecomtje/Repositories/iapy/rockai/data/dataset_random.db"
+  dim: 4
+  batch_size: 64
   num_workers: 2
   mean: 32928.34934854074
   std: 6935.238201002077

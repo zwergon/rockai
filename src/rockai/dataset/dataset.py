@@ -1,7 +1,8 @@
 import os
 import torch
 import numpy as np
-
+from typing import Tuple
+from torch import Tensor
 from torch.utils.data import Dataset
 from torchvision.transforms import Normalize, Compose, ToTensor
 
@@ -60,7 +61,9 @@ class Drp3dSqliteDataset(Dataset):
         cube = self.cubes[idx]
         print(f"cube {idx} cube_id {cube[4]}  permeability {cube[3]}")
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> Tuple[Tensor, Tensor]:
+        # X : (1, dim, dim, dim)
+        # y : (1,)
         cube = self.cubes[idx]
         offset = cube[0:3]
         cube_id = cube[4]

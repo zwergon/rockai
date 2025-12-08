@@ -20,14 +20,62 @@ from mlflow.models import ModelSignature
 
 
 from rockai.models.resnet18 import Resnet18Model
-from rockai.dataset.dataset import Drp3dSqliteDataset, MinMaxNormalize, MeanNormalize
+from rockai.dataset.dataset import (
+    Drp3dSqliteDataset,
+    MinMaxNormalize,
+    MeanNormalize,
+    Drp3dDatasetConfig
+)
 
 
-class Drp3dTraining(Training):
+class RockaiTransform(MlflowTransform):
+    def __init__(self, config: Config) -> None:
+        super().__init__(transform=None)
+        dataset_config: Drp3dDatasetConfig = config.dataset
+        self.transform = MeanNormalize(
+            dataset_config.mean,
+            dataset_config.std
+        )
+
+    def __call__(self, model_input, *args, **kwds) -> torch.Tensor:
+        # input is numpy array
+        model_input = self.transform(model_input)
+        tensor = torch.from_numpy(model_input)
+        return tensor.float()
+
+
+class RockaiMlfowModelProvider(IMlfowModelProvider):
+
+    def __init__(self, config: Config) -> None:
+        self._config:  Drp3dDatasetConfig = config.dataset
+        i_dim = self._config.dim
+        self._input_example = np.random.rand(
+            1, 1, i_dim, i_dim, i_dim).astype(np.float32)
+        self._transform = RockaiTransform(config)
+
+    def get_input_example(self) -> np.array:
+        return self._input_example
+
+    def get_transform(self) -> MlflowTransform:
+        return self._transform
+
+    def get_signature(self) -> ModelSignature:
+        input_schema = Schema([
+            TensorSpec(np.dtype(np.float32),
+                       shape=self._input_example.shape)
+        ])
+        output_schema = Schema([
+            TensorSpec(np.dtype(np.float32), shape=(-1, 1))
+        ])
+        return ModelSignature(inputs=input_schema, outputs=output_schema)
+
+
+class RockaiTraining(Training):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config)
         self.predictions.add_plotter(ScatterPlotter(config))
+        self.mlflow_model_provider = RockaiMlfowModelProvider(config)
 
 
 if __name__ == "__main__":
@@ -47,20 +95,20 @@ if __name__ == "__main__":
 
     Training.seed(config)
 
-    x_transform = MeanNormalize(config.dataset.mean, config.dataset.std)
     y_transform = MinMaxNormalize(0.2, 23)
 
-    training = Drp3dTraining(config)
+    training = RockaiTraining(config)
+    mlflow_transform: MlflowTransform = training.get_transform()
     train_dataset = Drp3dSqliteDataset(
         config,
         train_flag="train",
-        x_transform=x_transform,
+        x_transform=mlflow_transform.transform,
         y_transform=y_transform)
 
     valid_dataset = Drp3dSqliteDataset(
         config,
         train_flag="valid",
-        x_transform=x_transform,
+        x_transform=mlflow_transform.transform,
         y_transform=y_transform
     )
 
