@@ -4,8 +4,8 @@ from rockai.models.backbone import ResNet, generate_model
 
 
 class Resnet18Model(Model):
-    def __init__(self, loader, config: Config):
-        super(Resnet18Model, self).__init__(loader, config)
+    def __init__(self, config: Config):
+        super(Resnet18Model, self).__init__(config)
         self.model: ResNet = generate_model(model_depth=18, n_classes=1)
 
     def forward(self, x):

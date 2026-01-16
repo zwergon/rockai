@@ -3,3 +3,4 @@ mlruns
 **/*/__pycache__
 src/_version.py
 notebooks/.ipynb_checkpoints
+data/

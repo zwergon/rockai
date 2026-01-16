@@ -13,24 +13,6 @@ from rockai.dataset.sqlite_dataset import SqliteDataset
 from rockai.dataset.config import Drp3dDatasetConfig
 
 
-class MeanNormalize:
-    def __init__(self, mean, std) -> None:
-        self.mean = mean
-        self.std = std
-
-    def __call__(self, y):
-        return (y - self.mean) / self.std
-
-
-class MinMaxNormalize:
-    def __init__(self, y_min, y_max) -> None:
-        self.y_min = y_min
-        self.y_max = y_max
-
-    def __call__(self, y):
-        return (y - self.y_min) / (self.y_max - self.y_min)
-
-
 class Drp3dSqliteDataset(Dataset):
 
     def __init__(self,

@@ -2,18 +2,30 @@ project: drp
 run: basemethod
 
 dataset:
-  type: "drp3d_sqlite"
+  type: "Drp3dDatasetConfig"
   path: "/work/lecomtje/Repositories/mixsim3d_gretsi/data/dataset"
   db: "/work/lecomtje/Repositories/iapy/rockai/data/dataset_random.db"
   dim: 4
   batch_size: 64
   num_workers: 2
-  mean: 32928.34934854074
-  std: 6935.238201002077
+  stats:
+    - variable: "global"
+      stats:
+        - 32928.34934854074
+        - 6935.238201002077
+        - 0.
+        - 64000.
+    - variable: "permeability"
+      stats:
+        - 0
+        - 6935.238201002077
+        - 0.2
+        - 23.
+  
 
  
 model:
-  model: "resnet18"
+  provider: "RockaiProvider"
 
 
 metrics:

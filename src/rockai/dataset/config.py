@@ -10,4 +10,4 @@ class Drp3dDatasetConfig(DatasetConfig):
 
 
 DatasetConfigFactory().register_dataset_config(
-    "drp3d_sqlite", Drp3dDatasetConfig)
+    "Drp3dDatasetConfig", Drp3dDatasetConfig)
